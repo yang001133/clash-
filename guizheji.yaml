@@ -64,22 +64,26 @@ dns:
  
 # 出站策略
 # 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
-pr: &pr {type: select, proxies: [ 默认代理, 香港故转,  日本故转,  香港自动,  日本自动,  美国,  自动选择, , 🇺🇲 美国节点,  全部节点, 全球直连]}
+pr: &pr {type: select, proxies: [默认代理,香港故转,日本故转,加坡故转,美国自动,其他地区,家宽节点,高速节点,便宜节点,直连]}
 proxy-groups:
-  - {name: 🚀 默认代理, type: select, proxies: [ 香港故转,  日本故转,  香港自动,  日本自动,  美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🌐 全部节点, 直连]}
-  - {name: 📹 YouTube, <<: *pr}
-  - {name: 🍀 Google, <<: *pr}
-  - {name: 📲 Telegram, <<: *pr}
-  - {name: 🎥 NETFLIX, <<: *pr}
-  - {name: 🍎 Apple, type: select, proxies: [直连, 🚀 默认代理]}
-  - {name: 🎯 直连, type: select, proxies: [直连, 🚀 默认代理]}
+  - {name: 默认代理, <<: *pr}
+  - {name: YouTube, <<: *pr}
+  - {name: Google, <<: *pr}
+  - {name: Telegram, <<: *pr}
+  - {name: HBO, <<: *pr}
+  - {name: Primevideo, <<: *pr}
+  - {name: NETFLIX, <<: *pr}
+  - {name: AppleTV, <<: *pr}
+  - {name: 全球直连, type: select, proxies: [直连,默认代理]}
   - {name: 🐟 漏网之鱼, <<: *pr}
-  - {name: 🔯 香港故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"}
-  - {name: 🔯 日本故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美)).)*$" }
-  - {name: ♻️ 香港自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美)).)*$"}
-  - {name: ♻️ 美国自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(美|US|(?i)States|America))^((?!(港|台|日|韩|新)).)*$"}
-  - {name: 🌐 全部节点, type: select, include-all: true}
-
+  - {name: 香港故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(香港|HK|Hong Kong|🇭🇰|HongKong))^((?!(深港|家宽|游戏|剩余|流量|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍)).)*$"}
+  - {name: 日本故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan))^((?!(家宽|游戏|剩余|流量|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x)).)*$" }
+  - {name: 加坡故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(新加坡|坡|狮城|SG|Singapore))^((?!(家宽|游戏|剩余|流量|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x)).)*$"}
+  - {name: 美国自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates)).)*$"}
+  - {name: 其他地区, type: select, include-all: true, filter: "^((?!(剩余|香港|HK|Hong Kong|🇭🇰|HongKong|台湾|台|Taiwan|TW|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore||UnitedStates|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)).)*$"}
+  - {name: 家宽节点, type: select, include-all: true, filter: "(?i)家宽|家庭"}
+  - {name: 高速节点, type: select, include-all: true, filter: "(?i)专线|沪日|深日|深港|沪港|IEPL"}
+  - {name: 便宜节点, type: select, include-all: true, filter: "(?i)0.1|0.1x|0.2|0.2倍|0.2x|0.5|0.5倍|0.5x"}
 # 规则匹配
 # 此规则部分没有做防泄露处理，因为弊严重大于利！
 rules:
