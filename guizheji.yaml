@@ -85,7 +85,6 @@ proxy-groups:
   - {name: 高速节点, type: select, include-all: true, filter: "(?i)专线|沪日|深日|深港|沪港|IEPL"}
   - {name: 便宜节点, type: select, include-all: true, filter: "(?i)0.1|0.1x|0.2|0.2倍|0.2x|0.5|0.5倍|0.5x"}
 # 规则匹配
-# 此规则部分没有做防泄露处理，因为弊严重大于利！
 rules:
   - RULE-SET,netflix_domain, NETFLIX
   - RULE-SET,youtube_domain, YouTube
