@@ -10,6 +10,8 @@ proxy-providers:
       interval: 300
     proxy: 直连
 
+proxies:
+  - {name: 直连, type: direct}
 
 # 全局配置 
 port: 7890
@@ -51,7 +53,7 @@ dns:
   fake-ip-range: 28.0.0.1/8
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - "rule-set:private_domain,cn_domain"
+    - "rule-set:cn_domain"
     - "time.*.com"
   default-nameserver:
     - 223.5.5.5
@@ -64,7 +66,7 @@ dns:
  
 # 出站策略
 # 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
-pr: &pr {type: select, proxies: [默认代理,香港故转,日本故转,加坡故转,美国自动,其他地区,家宽节点,高速节点,便宜节点,直连]}
+pr: &pr {type: select, proxies: [香港故转,日本故转,加坡故转,美国自动,其他地区,家宽节点,高速节点,便宜节点,直连]}
 proxy-groups:
   - {name: 默认代理, <<: *pr}
   - {name: YouTube, <<: *pr}
@@ -76,7 +78,7 @@ proxy-groups:
   - {name: PS5, <<: *pr}
   - {name: Disney, <<: *pr}
   - {name: AppleTV, <<: *pr}
-  - {name: 全球直连, type: select, proxies: [直连,默认代理]}
+  - {name: 全球直连, <<: *pr}
   - {name: 🐟 漏网之鱼, <<: *pr}
   - {name: 香港故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(香港|HK|Hong Kong|🇭🇰|HongKong))^((?!(深港|家宽|游戏|剩余|流量|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍)).)*$"}
   - {name: 日本故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan))^((?!(家宽|游戏|剩余|流量|2.0|2倍|2x|3.0|3倍|3x|4.0|4倍|4x|5.0|5倍|5x)).)*$" }
@@ -85,7 +87,7 @@ proxy-groups:
   - {name: 其他地区, type: select, include-all: true, filter: "^((?!(剩余|香港|HK|Hong Kong|🇭🇰|HongKong|台湾|台|Taiwan|TW|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore||UnitedStates|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)).)*$"}
   - {name: 家宽节点, type: select, include-all: true, filter: "(?i)家宽|家庭"}
   - {name: 高速节点, type: select, include-all: true, filter: "(?i)专线|沪日|深日|深港|沪港|IEPL"}
-  - {name: 便宜节点, type: select, include-all: true, filter: "(?i)0.1|0.1x|0.2|0.2倍|0.2x|0.5|0.5倍|0.5x"}
+  - {name: 便宜节点, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "(?i)0.1|0.1x|0.2|0.2倍|0.2x|0.5|0.5倍|0.5x"}
 # 规则匹配
 rules:
   - RULE-SET,netflix_domain, NETFLIX
