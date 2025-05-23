@@ -1,7 +1,7 @@
 # 机场订阅
 proxy-providers:
   YKK:
-    url: "https://cloud.ykkk.tech/api/v1/client/subscribe?token=c1cd0223abfb0a02d78b108bceb6bf56"
+    url: "https://cloud.ykkk.tech/api/v1/client/subscribe?token=6441910d4b9c73e7c4e8f15d6fc98c25"
     type: http
     interval: 86400
     health-check:
