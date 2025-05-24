@@ -11,7 +11,7 @@ proxy-providers:
     proxy: 直连
 
 proxies:
-  - {name: 直连, type: direct, udp: true}
+  - {name: 直连, type: direct}
 
 # 全局配置 
 port: 7890
@@ -38,7 +38,7 @@ profile:
 # 控制面板
 external-controller: 0.0.0.0:9090
 secret: ""
-external-ui: "/etc/mihomo/run/ui"
+external-ui: "ui"
 external-ui-name: zashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
